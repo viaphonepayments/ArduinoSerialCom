@@ -112,7 +112,7 @@ int  Tserial::connect(char *port_arg, int rate_arg, serial_parity parity_arg) {
 
 		// -- misc params ---- 
 		dcb.fErrorChar = 0;
-		dcb.fBinary = 1;
+		dcb.fBinary = 1;   //binary mode is enabled, must be true
 		dcb.fNull = 0;
 		dcb.fAbortOnError = 0;
 		dcb.wReserved = 0;

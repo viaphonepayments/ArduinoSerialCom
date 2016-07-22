@@ -15,12 +15,12 @@ int main()
 	
 	//printf("Retreiving device name...");
 
-	//device.device_name();
+	device.device_name();
 	//device.device_name();
 
 	printf("Sending chirp...");
 	device.playChirp("qpk93solit6k530de9");
-	device.playChirp("qpk93solit6k530de9");
+	//device.playChirp("qpk93solit6k530de9");
 	Sleep(5000);
 	device.stopDevice();
     return 0;
