@@ -5,7 +5,8 @@
 #define TSERIAL_H
 
 #include <stdio.h>
-#include <windows.h>
+//#include <windows.h>
+//#include <vector>
 
 
 enum serial_parity { spNONE, spODD, spEVEN };
@@ -20,7 +21,9 @@ protected:
 	HANDLE            serial_handle;               
 													 
 public:
-	
+	typedef std::vector<UINT> CPortsArray;
+	typedef std::vector<std::string> CNamesArray;
+
 	Tserial();
 	
 	~Tserial();
@@ -38,6 +41,20 @@ public:
 	int getNbrOfBytes(void);
 	
 	void disconnect(void);
+
+	
+	static BOOL IsNumeric(LPCSTR pszString, BOOL bIgnoreColon);
+
+	static BOOL RegQueryValueString(ATL::CRegKey& key, LPCTSTR lpValueName, LPTSTR& pszValue);
+
+	static BOOL QueryDeviceDescription(HDEVINFO hDevInfoSet, SP_DEVINFO_DATA& devInfo, ATL::CHeapPtr<BYTE>& byFriendlyName);
+
+	static BOOL QueryRegistryPortName(ATL::CRegKey& deviceKey, int& nPort);
+
+	static BOOL QueryUsingSetupAPI(const GUID& guid, WORD dwFlags, CPortsArray& ports, CNamesArray& friendlyNames);
+	
+	static BOOL UsingSetupAPI1(CPortsArray& ports, CNamesArray& friendlyNames);
+
 };
 
 #endif TSERIAL_H

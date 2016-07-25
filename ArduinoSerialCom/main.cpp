@@ -9,9 +9,32 @@
 
 Device device;
 
+
 int main()
 {
-	device.startDevice("COM3", 9600);
+
+	
+
+	Tserial::CPortsArray ports;
+	Tserial::CNamesArray names;
+	
+	/*Tserial::listActiveComPorts(ports);
+	
+	for (int i = 0; i < ports.size(); i++) {
+		_tprintf(_T("COM%u\n"), ports[i]);
+		
+    }
+	*/
+	
+	Tserial::UsingSetupAPI1(ports, names);
+
+	for (int i = 0; i < ports.size(); i++) {
+		_tprintf(_T("COM%u <%s>\n"), ports[i], names[i].c_str());
+	}
+	
+	Sleep(5000);
+
+/*	device.startDevice("COM3", 9600);
 	
 	//printf("Retreiving device name...");
 
@@ -22,7 +45,13 @@ int main()
 	device.playChirp("qpk93solit6k530de9");
 	//device.playChirp("qpk93solit6k530de9");
 	Sleep(5000);
-	device.stopDevice();
+	device.stopDevice(); */
+
     return 0;
 }
+
+
+
+
+
 

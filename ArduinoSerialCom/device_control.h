@@ -1,8 +1,6 @@
 #pragma once
 
 #include "tserial.h"
-#include <string>
-#include <tchar.h>
 
 #define CHIRP_LEN 18
 
@@ -52,8 +50,7 @@ public:
 		char* buffer = new char[1024];
 		com->getArray(buffer, 1024);
 
-
-		printf("%c", buffer);
+//		printf("%c", buffer);
 
 		delete buffer;
 	}

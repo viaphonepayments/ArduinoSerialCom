@@ -5,9 +5,27 @@
 
 #pragma once
 
+#ifndef STRICT
+#define STRICT
+#endif
+
+#ifndef _WIN32_WINNT
+#define _WIN32_WINNT 0x0502
+#endif	
+
+
 #include "targetver.h"
 
+
+//Pull in ATL support
+#include <atlbase.h>
+#include <atlstr.h>
+#include <setupapi.h>
+
 #include <stdio.h>
+
+#include <vector>
+#include <string>
 #include <tchar.h>
 
 
