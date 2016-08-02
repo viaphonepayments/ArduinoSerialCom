@@ -215,8 +215,7 @@ BOOL ComPortDiscovery::FindArduinoDevice(char* result) {
 	
 	ComPortDiscovery::UsingSetupAPI1(ports, names);
 
-	std::string prefix("USB-SERIAL CH340"); //"USB-SERIAL CH340"
-
+	std::string prefix("USB-SERIAL CH340"); 
 	for (int i = 0; i < ports.size(); i++) {
 		if (!names[i].compare(0, prefix.size(), prefix)) {			
 			sprintf(result, "COM%u", ports[i]);

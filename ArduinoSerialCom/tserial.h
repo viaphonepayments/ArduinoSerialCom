@@ -18,7 +18,10 @@ protected:
 	char              port[10];                      // port name "com1",...
 	int               rate;                          // baudrate
 	serial_parity     parityMode;
-	HANDLE            serial_handle;               
+	HANDLE            serial_handle;             
+	COMSTAT status;
+	DWORD errors;
+
 													 
 public:
 	
@@ -27,12 +30,16 @@ public:
 	~Tserial();
 
 	int connect(char *port_arg, int rate_arg, serial_parity parity_arg);
+
+	int connectWithDefualtOpts(char *port_arg);
 	
 	void sendChar(char c);
 	
 	void sendArray(char *buffer, int len);
 	
 	char getChar(void);
+
+	int readData(char *buffer, unsigned int nbChar);
 	
 	int getArray(char *buffer, int len);
 	

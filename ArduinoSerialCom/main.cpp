@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <conio.h>
 #include "tserial.h"
+//#include "SerialClass.h"
 #include "device_control.h"
 #include "com_discovery.h"
 
@@ -16,40 +17,50 @@ Device device;
 int main()
 {
 	
-	char res[8];
-	if (ComPortDiscovery::FindArduinoDevice(res)) {
-		printf("Found: <%s>\n", res);
+	char port[8];
+	if (ComPortDiscovery::FindArduinoDevice(port)) {
+		printf("Found: <%s>\n", port);
 	
 	}
 	else {
 		printf("Not found!");
+		return 0;
+	}	
+
+	/*Serial* sp = new Serial(port);
+	if (sp->IsConnected()) {
+		printf("Connected!\n");
+	}
+	else {
+		return 0;
 	}
 
-	/*
-	ComPortDiscovery::CPortsArray ports;
-	ComPortDiscovery::CNamesArray names;
-	
-	
-	ComPortDiscovery::UsingSetupAPI1(ports, names);
+	char incomingData[256] = "";
+	sp->WriteData("\2ua;", 4);
+	Sleep(200);
+	sp->ReadData(incomingData, 256);
+	printf("%s\n", incomingData);
 
-	for (int i = 0; i < ports.size(); i++) {
-		_tprintf(_T("COM%u <%s>\n"), ports[i], names[i].c_str());
-	}
+
+	Sleep(5000);
 	*/
-	Sleep(5000);
-	
-/*	device.startDevice("COM3", 9600);
-	
-	//printf("Retreiving device name...");
 
-	device.device_name();
-	//device.device_name();
+	if (device.startDevice(port)) {
 
-	printf("Sending chirp...");
-	device.playChirp("qpk93solit6k530de9");
-	//device.playChirp("qpk93solit6k530de9");
-	Sleep(5000);
-	device.stopDevice(); */
+		//printf("Retreiving device name...");
+
+		char buf[255] = "";
+		device.device_name(buf, 255);
+		printf("user-agent: %s\n", buf);
+		//device.device_name();
+		
+
+		//printf("Sending chirp...");
+		device.playChirp("qpk93solit6k530de9");
+		//device.playChirp("qpk93solit6k530de9");
+		Sleep(5000);
+		device.stopDevice();
+	} 
 
     return 0;
 }

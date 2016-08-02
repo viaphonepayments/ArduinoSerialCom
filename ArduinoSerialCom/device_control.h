@@ -15,10 +15,11 @@ public:
 	Device() {
 	}
 
-	bool startDevice(char *port, int speed)	{
+	bool startDevice(char *port, int speed = 9600)	{
 		com = new Tserial();
 		if (com != 0) {
 			if (com->connect(port, speed, spNONE)) {
+			//if (com->connectWithDefualtOpts(port)) {
 				printf("Not Connected...\n");
 			} 
 			else {
@@ -43,29 +44,38 @@ public:
 		printf("%c", data);
 	}
 
-	void device_name() {
-		char *cmd = "ua;";
+
+	void device_name(char* buf, int len) {
+		char *cmd = "\2ua;";
 		com->sendArray(cmd, strlen(cmd));
-
-		char* buffer = new char[1024];
-		com->getArray(buffer, 1024);
-
-//		printf("%c", buffer);
-
-		delete buffer;
+		Sleep(100);		
+		com->readData(buf, len);
 	}
+
 
 	int playChirp(const char* chirp) {
 		int len = strlen(chirp);
 		if (len != CHIRP_LEN) {
 			return -1;
 		}
-		char cmd[CHIRP_LEN + 4];
-		cmd[0] = '\0';
-		strcat(cmd, "ch");
-		strcat(cmd, chirp);
-		strcat(cmd, ";");
+		char cmd[CHIRP_LEN + 5];
+		sprintf(cmd, "\2ch%s;", chirp);
 		com->sendArray(cmd, strlen(cmd));
+
+		Sleep(200);
+
+		char buf[255] = "";
+		if (com->readData(buf, 255)) {
+			printf("%s\n", buf);
+		}
+
+		memset(&buf[0], 0, sizeof(buf));
+		
+		Sleep(3000);
+		if (com->readData(buf, 255)) {
+			printf("%s\n", buf);
+		}
+
 		return 0;
 	}
 
